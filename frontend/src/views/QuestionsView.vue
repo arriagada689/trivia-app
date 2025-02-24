@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import formatTime from '@/utils/formatTime';
+import { triviaCategories } from '@/data/categories';
 
 const route = useRoute(); 
 const router = useRouter()
@@ -21,6 +22,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 onMounted(async () => {
     try {
+        validateQueryParams()
         const response = await fetch(`${apiBaseUrl}/trivia/questions?category=${category}&difficulty=${difficulty}&amount=${amount}`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -42,6 +44,20 @@ onMounted(async () => {
         console.error(error.message)
     }
 })
+
+const validateQueryParams = () => {
+    //check if valid category
+    const categoryCheck = (triviaCategories.some(item => item.id === Number(category))) || (Number(category) === 0)
+    if(!categoryCheck) router.push('/not_found')
+
+    //check if difficulty is valid
+    const difficulties = ['any', 'easy', 'medium', 'hard']
+    const difficultyCheck = difficulties.includes(difficulty)
+    if(!difficultyCheck) router.push('/not_found')
+
+    //check if amount is valid
+    if(amount < 0 || amount > 50) router.push('/not_found')
+}
 
 const handleOptionClick = (option) => {
     selectedOption.value = option
@@ -66,28 +82,36 @@ const handleOptionClick = (option) => {
 
 const handleEndGame = async () => {
     if(localStorage.getItem('userInfo')){
-        const token = JSON.parse(localStorage.getItem('userInfo')).token
-        const response = await fetch(`${apiBaseUrl}/users/post_game`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                correct_count: correctCount.value,
-                incorrect_count: incorrectCount.value,
-                time_taken: time.value,
-                question_arr: questionArr.value,
-                user_input_arr: userInputArr.value,
-                correct_answer_arr: correctAnswerArr.value,
-                category: category === 0 ? 'Any' : category,
-                gamemode: 'Normal'
+        try {
+            const token = JSON.parse(localStorage.getItem('userInfo')).token
+            const response = await fetch(`${apiBaseUrl}/users/post_game`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    correct_count: correctCount.value,
+                    incorrect_count: incorrectCount.value,
+                    time_taken: time.value,
+                    question_arr: questionArr.value,
+                    user_input_arr: userInputArr.value,
+                    correct_answer_arr: correctAnswerArr.value,
+                    category: category === 0 ? 'Any' : category,
+                    gamemode: 'Normal'
+                })
             })
-        })
-        if(response.ok){
-            await response.json()
-            router.push(`/results/${data.id}`)
+            if(response.ok){
+                const data = await response.json()
+                router.push(`/results/${data.id}`)
+            } else {
+                const error = await response.json()
+                throw new Error(error.message)
+            }
+        } catch (error) {
+            console.error(error.message)
         }
+        
     } else {
         const resultData = {
             correct_count: correctCount.value,
@@ -95,7 +119,7 @@ const handleEndGame = async () => {
             time_taken: time.value,
             question_arr: questionArr.value,
             user_input_arr: userInputArr.value,
-            correctAnswerArr: correctAnswerArr.value,
+            correct_answer_arr: correctAnswerArr.value,
             gamemode: 'Normal'
         }
         sessionStorage.setItem('resultData', JSON.stringify(resultData))

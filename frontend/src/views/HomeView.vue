@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { triviaCategories } from '@/data/categories';
 
@@ -10,6 +10,7 @@ const difficulty = ref('any')
 const limit = ref(50)
 const amount = ref(1)
 const gamemode = ref('Normal')
+const timeLimit = ref(10)
 const categories = triviaCategories
 
 const userData = ref(null)
@@ -22,6 +23,11 @@ const handleStart = () => {
         router.push(`/timed_questions?category=${category.value}&difficulty=${difficulty.value}&amount=${amount.value}`)
     }
 }
+
+//handles time limit
+watchEffect(() => {
+    sessionStorage.setItem('time_limit', timeLimit.value)
+})
 
 </script>
 
@@ -62,6 +68,16 @@ const handleStart = () => {
             <select name="gamemode" id="gamemode" v-model="gamemode" className='w-full text-center border dark:bg-primary dark:border-white border-black p-1 text-lg'>
                 <option :value="'Normal'">Normal</option>
                 <option :value="'Timed'">Timed</option>
+            </select>
+        </div>
+
+        <!--Time limit dropdown-->
+        <div v-if="gamemode === 'Timed'" class="space-y-2">
+            <div className='text-center text-2xl font-medium'>Select <span className='text-secondary'>Time Limit</span></div>
+            <select name="time-limir" id="time-limit" v-model="timeLimit" className='w-full text-center border dark:bg-primary dark:border-white border-black p-1 text-lg'>
+                <option :value="5">5</option>
+                <option :value="10">10</option>
+                <option :value="15">15</option>
             </select>
         </div>
     </div>
