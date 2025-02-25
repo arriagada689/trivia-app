@@ -1,17 +1,19 @@
 <script setup>
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 
 const authStore = useAuthStore()
+const router = useRouter()
 
 const logoutUser = () => {
     authStore.logout()
+    router.push('/')
 }
 </script>
 
 <template>
-    <nav class="space-x-3">
+    <nav class="space-x-3 border-b">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/leaderboard">Leaderboard</RouterLink>
         
@@ -23,6 +25,5 @@ const logoutUser = () => {
             <RouterLink to="/login">Log In</RouterLink>
             <RouterLink to="/register">Register</RouterLink>
         </div>
-
     </nav>
 </template>

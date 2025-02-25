@@ -7,6 +7,9 @@ import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
 import ResultsView from "@/views/ResultsView.vue";
 import LeaderboardView from "@/views/LeaderboardView.vue";
+import ProfileView from "@/views/ProfileView.vue";
+import { useAuthStore } from "@/stores/authStore";
+import UpdateProfileView from "@/views/UpdateProfileView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,11 +50,34 @@ const router = createRouter({
             component: LeaderboardView
         },
         {
+            path: '/profile/update',
+            name: 'profile-update',
+            component: UpdateProfileView
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: ProfileView,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/:catchAll(.*)',
             name: 'not-found',
             component: NotFoundView
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore()
+
+    if(to.meta.requiresAuth && !authStore.isLoggedIn){
+        next('/login')
+    } else {
+        next()
+    }
 })
 
 export default router
