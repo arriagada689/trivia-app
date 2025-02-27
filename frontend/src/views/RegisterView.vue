@@ -1,7 +1,8 @@
 <script setup>
+import FormInput from '@/components/FormInput.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, RouterLink } from 'vue-router';
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -46,26 +47,36 @@ const handleRegister = async () => {
 <template>
     <div v-if="loading">Loading</div>
 
-    <div v-else>
-        <div v-if="errorMessage.length > 0">{{ errorMessage }}</div>
+    <div v-else class="flex items-center justify-center h-[calc(100vh-65px)]">
+        
+        <form @submit.prevent="handleRegister" class="space-y-6 p-10 shadow-xl rounded-md bg-white relative">
+            <div v-if="errorMessage.length > 0" class="absolute -top-12 left-0 border-2 border-red-800 bg-red-300 p-1 px-2 w-full text-red-600 text-center">{{ errorMessage }}</div>
+            
+            <div class="text-2xl font-bold text-center">Register</div>
+            
+            <FormInput 
+                label="Username"
+                v-model="form.username"
+                id="username"
+            />
 
-        <form @submit.prevent="handleRegister">
-            <div>
-                <label for="username">Username:</label>
-                <input class="border" id="username" v-model="form.username" type="text" required>
-            </div>
+            <FormInput 
+                label="Password"
+                v-model="form.password"
+                id="password"
+                type="password"
+            />
 
-            <div>
-                <label for="password">Password:</label>
-                <input class="border" id="password" v-model="form.password" type="text" required>
-            </div>
+            <FormInput 
+                label="Confirm password"
+                v-model="form.confirm_password"
+                id="confirm_password"
+                type="password"
+            />
 
-            <div>
-                <label for="confirm_password">Confirm Password:</label>
-                <input class="border" id="confirm_password" v-model="form.confirm_password" type="text" required>
-            </div>
+            <button class="bg-purple-600 hover:bg-purple-500 w-full text-white font-semibold cursor-pointer py-1 rounded-md active:scale-[98%]" type="submit">Register</button>
 
-            <button type="submit">Register</button>
+            <div>Already have an account? <RouterLink to="/login" class="text-blue-500 hover:underline">Log in</RouterLink></div>
         </form>
     </div>
 </template>
