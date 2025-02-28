@@ -42,7 +42,7 @@ const handleDropdownClick = (command) => {
             <button v-if="active" @click="handleDropdownClick(false)"><i class="pi pi-times text-xl"></i></button>
             <button v-else @click="handleDropdownClick(true)"><i class="pi pi-bars text-xl"></i></button>
 
-            <div :class="`fixed bg-gray-700 top-[65px] right-0 h-fit w-3/4 transition-transform duration-200 ease-in-out ${active ? 'translate-x-0' : 'translate-x-full'}`">
+            <div :class="`fixed bg-gray-700 top-[65px] right-0 h-fit w-full border-t border-t-white transition-transform duration-200 ease-in-out ${active ? 'translate-x-0' : 'translate-x-full'}`">
                 <div v-if="authStore.isLoggedIn" class="flex flex-col text-center text-lg font-semibold">
                     <RouterLink to="/profile" @click="handleDropdownClick(false)" class="border-b border-b-white w-full py-2"><i class="pi pi-user mr-3"></i>Profile</RouterLink>
                     <button @click="logoutUser" class="w-full py-2"><i class="pi pi-sign-out mr-3"></i>Log out</button>
