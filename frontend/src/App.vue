@@ -8,7 +8,7 @@ import Navbar from './components/Navbar.vue';
     <Navbar />
   </div>
 
-  <div class="container mx-auto">
+  <div class="container mx-auto pb-3">
     <RouterView />
   </div>
 </template>

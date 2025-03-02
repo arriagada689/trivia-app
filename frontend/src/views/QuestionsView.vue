@@ -2,7 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import formatTime from '@/utils/formatTime';
-import { triviaCategories } from '@/data/categories';
+import { triviaCategories } from '@/data/categories.js';
+import getCategory from '@/utils/getCategory.js';
 
 const route = useRoute(); 
 const router = useRouter()
@@ -97,7 +98,7 @@ const handleEndGame = async () => {
                     question_arr: questionArr.value,
                     user_input_arr: userInputArr.value,
                     correct_answer_arr: correctAnswerArr.value,
-                    category: category === 0 ? 'Any' : category,
+                    category: Number(category) === 0 ? 'Any' : getCategory(Number(category)),
                     gamemode: 'Normal'
                 })
             })
