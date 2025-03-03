@@ -58,7 +58,9 @@ const gamemodeColor = () => {
 </script>
 
 <template>
-    <div v-if="loading">Loading</div>
+    <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
+        <i class="pi pi-spinner animate-spin text-7xl"></i>
+    </div>
 
     <div v-else class="flex flex-col justify-center text-center gap-y-4 mt-3 mx-3 md:mx-0 pb-3">
         <div class="flex items-center justify-center gap-x-3">

@@ -35,7 +35,9 @@ const updateMetric = (newMetric) => {
 </script>
 
 <template>
-    <div v-if="loading">Loading</div>
+    <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
+        <i class="pi pi-spinner animate-spin text-7xl"></i>
+    </div>
 
     <div v-else>
         <div class="space-x-3">

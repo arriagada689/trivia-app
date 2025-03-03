@@ -18,6 +18,7 @@ const userInputArr = ref([])
 const correctAnswerArr = ref([])
 const correctCount = ref(0)
 const incorrectCount= ref(0)
+const loading = ref(true)
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
@@ -32,6 +33,7 @@ onMounted(async () => {
         if(response.ok){
             const data = await response.json()
             questions.value = data
+            loading.value = false
 
             let stopwatch = setInterval(() => {
                 time.value += 1
@@ -169,7 +171,10 @@ const difficultyBgColor = (difficulty) => {
 </script>
 
 <template>
-    <div v-if="questions">
+    <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
+        <i class="pi pi-spinner animate-spin text-7xl"></i>
+    </div>
+    <div v-else>
         <div>Category: <span>{{ questions[index].category }}</span></div>
         <div><i class="pi pi-stopwatch"></i> <span>{{ formatTime(time) }}</span></div>
         <div>Question: <span>{{ index + 1 }}</span></div>
