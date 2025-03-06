@@ -14,7 +14,9 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors());
+app.use(cors({
+    origin: ['https://arriagada689-trivia-app.xyz', 'http://localhost:5173', 'http://localhost:4173']
+}));
 
 app.use('/api/users', userRoutes)
 app.use('/api/trivia', triviaRoutes)

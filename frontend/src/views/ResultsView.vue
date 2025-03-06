@@ -65,7 +65,7 @@ const gamemodeColor = () => {
     <div v-else class="flex flex-col justify-center text-center gap-y-4 mt-3 mx-3 md:mx-0 pb-3">
         <div class="flex items-center justify-center gap-x-3">
             <span class="text-xl md:text-3xl font-semibold">Results: <span class="text-purple-600">{{ resultData.correct_count }}/{{ resultData.question_arr.length }}</span></span>
-            <span class="text-lg md:text-2xl">Time: <span class="text-purple-600">{{ resultData.time_taken }}</span></span>
+            <span class="text-lg md:text-2xl">Time: <span class="text-purple-600">{{ formatTime(resultData.time_taken) }}</span></span>
             <span class="text-lg md:text-2xl">Game mode: <span :class="gamemodeColor()">{{ resultData.gamemode }}</span></span>
         </div>
         <div class="text-3xl font-semibold text-green-500">{{ formatAsPercentage(resultData.correct_count / resultData.question_arr.length) }}</div>
