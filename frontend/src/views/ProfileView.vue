@@ -77,7 +77,7 @@ const handleClick = (command) => {
 
 <template>
     <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
-        <i class="pi pi-spinner animate-spin text-7xl"></i>
+        <i class="pi pi-spinner animate-spin text-7xl text-purple-600"></i>
     </div>
 
     <div v-else>

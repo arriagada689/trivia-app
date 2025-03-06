@@ -6,7 +6,7 @@ const metric = ref('1')
 const userData = ref(null)
 const loading = ref(false)
 
-const username = JSON.parse(localStorage.getItem('userInfo')).username
+const username = JSON.parse(localStorage.getItem('userInfo'))?.username || ''
 
 watchEffect(async () => {
     try {
@@ -19,7 +19,6 @@ watchEffect(async () => {
             })
             if(response.ok){
                 const data = await response.json()
-                console.log(data);
                 userData.value = data
             } else {
                 const error = await response.json()
@@ -39,7 +38,7 @@ const updateMetric = (newMetric) => {
 
 <template>
     <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
-        <i class="pi pi-spinner animate-spin text-7xl"></i>
+        <i class="pi pi-spinner animate-spin text-7xl text-purple-600"></i>
     </div>
 
     <div v-else class="space-y-5 mt-3 mx-3 md:mx-0">

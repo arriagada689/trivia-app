@@ -40,7 +40,7 @@ const handleNextClick = () => {
 
 <template>
     <div v-if="loading" class="flex items-center justify-center h-fit md:h-[384px] border-b md:border-none pb-3 md:pb-0">
-        <i class="pi pi-spinner animate-spin text-7xl"></i>
+        <i class="pi pi-spinner animate-spin text-7xl text-purple-600"></i>
     </div>
     <div v-else class="flex flex-col justify-center items-center h-fit md:h-[384px] gap-y-5 border-b md:border-none pb-3 md:pb-0">
         <div class="space-x-6">

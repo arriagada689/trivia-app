@@ -1,8 +1,8 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import db from './config/db.js';
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path';
+import { fileURLToPath } from 'url'
 dotenv.config();
 
 import userRoutes from './routes/userRoutes.js'
@@ -19,9 +19,18 @@ app.use(cors());
 app.use('/api/users', userRoutes)
 app.use('/api/trivia', triviaRoutes)
 
-app.get('/', async (req, res) => {
-    res.send('server is ready')
-})
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, '../frontend/dist', "index.html"));
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('server is ready')
+    })
+}
 
 app.use(notFound)
 app.use(errorHandler)

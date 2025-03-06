@@ -306,7 +306,6 @@ const modifyProfile = asyncHandler(async (req, res) => {
 // @access Private
 const deleteProfile = asyncHandler(async (req, res) => {
     const data = await db('users').where('id', req.user.id).first().del()
-    // console.log(data)
     res.json('Successfully removed user')
 })
 

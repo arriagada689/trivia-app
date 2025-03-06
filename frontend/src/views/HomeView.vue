@@ -132,7 +132,7 @@ const getNewLimit = async () => {
             </button>
 
             <!--Category dropdown-->
-            <div class="space-y-2 text-center">
+            <div class="space-y-2">
                 <div className='text-center text-2xl font-medium'>Select <span class='text-purple-600'>Category</span></div>
                 <select v-if="displayCategory" class='w-full text-center border border-black p-1 text-lg rounded-md'>
                     <option>{{ displayCategory }}</option>

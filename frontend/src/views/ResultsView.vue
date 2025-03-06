@@ -59,7 +59,7 @@ const gamemodeColor = () => {
 
 <template>
     <div v-if="loading" class="flex items-center justify-center min-h-[calc(90vh-65px)]">
-        <i class="pi pi-spinner animate-spin text-7xl"></i>
+        <i class="pi pi-spinner animate-spin text-7xl text-purple-600"></i>
     </div>
 
     <div v-else class="flex flex-col justify-center text-center gap-y-4 mt-3 mx-3 md:mx-0 pb-3">
@@ -77,8 +77,9 @@ const gamemodeColor = () => {
                 <div v-if="resultData.correct_answer_arr[index] === resultData.user_input_arr[index]" class="bg-green-500 rounded-md text-white font-semibold p-1">
                     Correct: {{ resultData.correct_answer_arr[index] }}
                 </div>
-                <div v-else-if="resultData.user_input_arr[index] === 'Ran out of time!'" class="bg-red-500 rounded-md text-white font-semibold p-1">
-                    No answer: Ran out of time!
+                <div v-else-if="resultData.user_input_arr[index] === 'Ran out of time!'" class="space-y-2">
+                    <div class="bg-red-500 rounded-md text-white font-semibold p-1">No answer: Ran out of time!</div>
+                    <div class="bg-green-500 rounded-md text-white font-semibold p-1">Correct answer: {{ resultData.correct_answer_arr[index] }}</div>
                 </div>
                 <div v-else class="space-y-2">
                     <div class="bg-red-500 rounded-md text-white font-semibold p-1">Your answer: {{ resultData.user_input_arr[index] }}</div>

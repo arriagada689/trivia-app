@@ -66,7 +66,6 @@ const getAmount = asyncHandler(async (req, res) => {
 // @access Public
 const getQuestions = asyncHandler(async (req, res) => {
     const { category, difficulty, amount } = req.query
-    // console.log(category, difficulty, amount)
     let trivia_base_url = triviaUrl + `/api.php?amount=${amount}&encode=url3986`
     if(category !== 0){
         trivia_base_url += `&category=${category}`
@@ -104,7 +103,6 @@ const getQuestions = asyncHandler(async (req, res) => {
         res.json(arr)
     } else {
         const error = await response.json()
-        // console.log(error)
         res.status(400).json('Error')
     }
 })
