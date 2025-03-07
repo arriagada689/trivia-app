@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { RouterLink, useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 import logo from '@/favicon-brain-32.png'
+import logo2 from '@/brain-96.png'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -22,7 +23,10 @@ const handleDropdownClick = (command) => {
 
 <template>
     <nav class="container mx-auto h-[65px] flex items-center justify-between text-white px-4 md:px-0">
-        <RouterLink to="/" @click="handleDropdownClick(false)" class="flex items-center gap-2 font-bold text-xl md:text-3xl"><img :src="logo" alt="brain logo">Trivia Game App</RouterLink>
+        <RouterLink to="/" @click="handleDropdownClick(false)" class="flex items-center gap-x-2 font-bold text-xl md:text-3xl">
+            <img :src="logo2" alt="brain logo" class="h-[32px] object-contain flex-shrink-0">
+            Trivia Game App
+        </RouterLink>
 
         <!--Desktop right side-->
         <div class="hidden md:flex items-center gap-x-5 font-semibold text-lg">
@@ -40,7 +44,7 @@ const handleDropdownClick = (command) => {
         </div>
 
         <!--Mobile right side-->
-        <div class="block md:hidden">
+        <div class="block md:hidden z-50">
             <button v-if="active" @click="handleDropdownClick(false)"><i class="pi pi-times text-xl"></i></button>
             <button v-else @click="handleDropdownClick(true)"><i class="pi pi-bars text-xl"></i></button>
 

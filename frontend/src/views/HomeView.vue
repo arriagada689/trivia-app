@@ -123,7 +123,7 @@ const getNewLimit = async () => {
         </div>
 
         <!--Prompt Section-->
-        <div className='space-y-3 bg-white rounded-md shadow-xl p-3 relative text-center'>
+        <div className='space-y-3 bg-white rounded-md shadow-xl p-3 relative text-center z-10'>
             <button 
                 class="lg:absolute left-3 top-3 bg-gray-300 hover:bg-gray-200 inline-flex items-center px-2 py-1 rounded-md cursor-pointer active:scale-[98%]"
                 @click="randomizeClick">
